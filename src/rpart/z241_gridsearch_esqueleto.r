@@ -11,7 +11,10 @@ require("parallel")
 
 PARAM <- list()
 # reemplazar por las propias semillas
-PARAM$semillas <- c(102191, 200177, 410551, 552581, 892237)
+PARAM$semillas <- c(100005, 100019, 100037, 100043, 1000877)
+
+ksemillas <- PARAM$semillas
+
 
 #------------------------------------------------------------------------------
 # particionar agrega una columna llamada fold a un dataset
@@ -89,7 +92,7 @@ ArbolesMontecarlo <- function(semillas, param_basicos) {
 #------------------------------------------------------------------------------
 
 # Aqui se debe poner la carpeta de la computadora local
-setwd("X:\\gdrive\\ITBA2023B\\") # Establezco el Working Directory
+setwd("~/buckets/b1") # Establezco el Working Directory
 # cargo los datos
 
 # cargo los datos
@@ -120,29 +123,36 @@ cat(
 
 # itero por los loops anidados para cada hiperparametro
 
-for (vmax_depth in c(4, 6, 8, 10, 12, 14)) {
-  for (vmin_split in c(1000, 800, 600, 400, 200, 100, 50, 20, 10)) {
-    # notar como se agrega
+# Bucles para ajustar los hiperparámetros cp y minbucket
+for (vcp in c(-0.5, -1)) { # Ejemplo de valores para cp
+  for (vminbucket in c(5, 10, 15, 30,60,120,300)) { # Ejemplo de valores para minbucket
+    for (vmax_depth in c(4, 6, 7, 8, 9, 10, 12, 15,18)) { # Valores para max_depth
+      for (vmin_split in c(5000, 2000, 1000, 800, 600, 500, 400, 200)) { # Valores para min_split
+        # Código aquí para ajustar los hiperparámetros y calcular la ganancia promedio
 
-    # vminsplit  minima cantidad de registros en un nodo para hacer el split
-    param_basicos <- list(
-      "cp" = -0.5, # complejidad minima
-      "minsplit" = vmin_split,
-      "minbucket" = 5, # minima cantidad de registros en una hoja
-      "maxdepth" = vmax_depth
-    ) # profundidad máxima del arbol
+        # Crear la lista de parámetros básicos con los valores actuales
+        param_basicos <- list(
+          "cp" = vcp,
+          "minsplit" = vmin_split,
+          "minbucket" = vminbucket,
+          "maxdepth" = vmax_depth
+        )
 
-    # Un solo llamado, con la semilla 17
-    ganancia_promedio <- ArbolesMontecarlo(ksemillas, param_basicos)
+        # Llamar a la función de búsqueda en la cuadrícula con los valores actuales de los hiperparámetros
+        ganancia_promedio <- ArbolesMontecarlo(ksemillas, param_basicos)
 
-    # escribo los resultados al archivo de salida
-    cat(
-      file = archivo_salida,
-      append = TRUE,
-      sep = "",
-      vmax_depth, "\t",
-      vmin_split, "\t",
-      ganancia_promedio, "\n"
-    )
+        # Escribir los resultados al archivo de salida
+        cat(
+          file = archivo_salida,
+          append = TRUE,
+          sep = "",
+          vmax_depth, "\t",
+          vmin_split, "\t",
+          vcp, "\t",
+          vminbucket, "\t",
+          ganancia_promedio, "\n"
+        )
+      }
+    }
   }
 }

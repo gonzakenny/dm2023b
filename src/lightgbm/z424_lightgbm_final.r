@@ -20,7 +20,7 @@ PARAM$input$dataset <- "./datasets/dataset_pequeno.csv"
 PARAM$input$training <- c(202107) # meses donde se entrena el modelo
 PARAM$input$future <- c(202109) # meses donde se aplica el modelo
 
-PARAM$finalmodel$semilla <- 102191
+PARAM$finalmodel$semilla <- 100005
 
 PARAM$finalmodel$num_iterations <- 559
 PARAM$finalmodel$learning_rate <- 0.0100746999

@@ -34,7 +34,7 @@ PARAM$finalmodel$max_bin <- 31
 #------------------------------------------------------------------------------
 #------------------------------------------------------------------------------
 # Aqui empieza el programa
-setwd("~/buckets/b1")
+setwd("C:/Users/gonza/OneDrive/ITBA/MineriaDatos")
 
 # cargo el dataset donde voy a entrenar
 dataset <- fread(PARAM$input$dataset, stringsAsFactors = TRUE)
@@ -67,8 +67,6 @@ dir.create(paste0("./exp/", PARAM$experimento, "/"), showWarnings = FALSE)
 
 # Establezco el Working Directory DEL EXPERIMENTO
 setwd(paste0("./exp/", PARAM$experimento, "/"))
-
-
 
 # dejo los datos en el formato que necesita LightGBM
 dtrain <- lgb.Dataset(

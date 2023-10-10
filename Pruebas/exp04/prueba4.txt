@@ -1,0 +1,23 @@
+# Aquí debe usted agregar sus propias nuevas variables
+operaciones = list(`+`, `-`, `*`, `/`)
+# Definimos los grupos de variables
+grupos_variables = list(
+    seguros = c("cseguro_vida", "cseguro_auto", "cseguro_vivienda", "cseguro_accidentes_personales"),
+    tarjetas_credito = c("ctarjeta_visa_transacciones", "mtarjeta_visa_consumo", "Visa_mlimitecompra", "ctarjeta_master_transacciones", "mtarjeta_master_consumo", "Visa_mlimitecompra"),
+    antiguedad = c("cliente_antiguedad","cliente_edad","numero_de_cliente"),
+    prestamos = c("cprestamos_personales", "mprestamos_personales", "cprestamos_prendarios", "mprestamos_prendarios", "cprestamos_hipotecarios", "mprestamos_hipotecarios")
+)
+# Para cada grupo de variables
+for nombre_grupo in names(grupos_variables):
+  variables_grupo = grupos_variables[[nombre_grupo]]
+  # Generamos entre 15 y 20 nuevas columnas
+  for valor in 1:sample(15:20, 1):
+    # Seleccionamos dos variables aleatorias del grupo
+    vars = sample(variables_grupo, 2)
+    # Seleccionamos una operación matemática aleatoria
+    operacion = sample(operaciones, 1)[[1]]
+    # Calculamos el resultado de la operación
+    resultado = operacion(dataset[[vars[1]]], dataset[[vars[2]]])
+    # Verificamos si todos los elementos del vector resultado son diferentes de 0 antes de crear la nueva columna
+    if (all(!is.na(resultado) & resultado != 0)):
+      dataset[, paste0(nombre_grupo, "_nueva_variable_", valor) := resultado]

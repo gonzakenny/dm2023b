@@ -6,7 +6,7 @@ require("data.table")
 require("rpart")
 require("rpart.plot")
 
-setwd("C:/Users/gonza/OneDrive/ITBA/MineriaDatos") # establezco la carpeta donde voy a trabajar
+setwd("~/buckets/b1/") # establezco la carpeta donde voy a trabajar
 
 # cargo el dataset
 dataset <- fread("./datasets/dataset_pequeno.csv")
@@ -16,11 +16,11 @@ dir.create("./exp/EA4810/", showWarnings = FALSE)
 setwd("./exp/EA4810")
 
 # uso esta semilla para los canaritos
-set.seed(100005)
+set.seed(102191)
 
 # agrego 30 variables canarito,
 #  random distribucion uniforme en el intervalo [0,1]
-for (i in 1:20) dataset[, paste0("canarito", i) := runif(nrow(dataset))]
+for (i in 1:30) dataset[, paste0("canarito", i) := runif(nrow(dataset))]
 
 
 # Primero  veo como quedan mis arboles
@@ -29,15 +29,15 @@ modelo <- rpart(
     data = dataset[foto_mes == 202107, ],
     model = TRUE,
     xval = 0,
-    cp = -1,
-    minsplit = 500,
-    minbucket = 1000,
-    maxdepth = 10
+    cp = -0.82,
+    minsplit = 769,
+    minbucket = 8,
+    maxdepth = 6
 )
 
 
 # Grabo el arbol de canaritos
-pdf(file = "./arbol_canaritos_bayesianos20canarios1000bucket.pdf", width = 28, height = 4)
+pdf(file = "./arbol_canaritos.pdf", width = 28, height = 4)
 prp(modelo,
     extra = 101, digits = -5,
     branch = 1, type = 4, varlen = 0, faclen = 0

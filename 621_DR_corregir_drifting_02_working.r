@@ -144,6 +144,19 @@ grupos_variables <- list(
   antiguedad = c("cliente_antiguedad","cliente_edad","numero_de_cliente"),
   prestamos = c("cprestamos_personales", "mprestamos_personales", "cprestamos_prendarios", "mprestamos_prendarios", "cprestamos_hipotecarios", "mprestamos_hipotecarios")
 )
+# Número aleatorio entre 35 y 40 para la cantidad de columnas nuevas
+num_nuevas_columnas <- sample(35:40, 1)
+
+# Lista de operaciones matemáticas
+operaciones <- list(`+`, `-`, `*`, `/`)
+
+# Definimos los grupos de variables
+grupos_variables <- list(
+  seguros = c("cseguro_vida", "cseguro_auto", "cseguro_vivienda", "cseguro_accidentes_personales"),
+  tarjetas_credito = c("ctarjeta_visa_transacciones", "mtarjeta_visa_consumo", "Visa_mlimitecompra", "ctarjeta_master_transacciones", "mtarjeta_master_consumo", "Visa_mlimitecompra"),
+  antiguedad = c("cliente_antiguedad","cliente_edad","numero_de_cliente"),
+  prestamos = c("cprestamos_personales", "mprestamos_personales", "cprestamos_prendarios", "mprestamos_prendarios", "cprestamos_hipotecarios", "mprestamos_hipotecarios")
+)
 
 # Para cada grupo de variables
 for (nombre_grupo in names(grupos_variables)) {
